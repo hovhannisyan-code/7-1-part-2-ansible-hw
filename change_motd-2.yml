@@ -1,0 +1,17 @@
+---
+- name: Change system motd
+  hosts: all
+  become: yes
+  vars:
+    motd_message: |
+      Hostname: {{ inventory_hostname }}
+      IP Address: {{ ansible_default_ipv4.address }}
+      Message: Have a great day, System Administrator!
+  tasks:
+    - name: Update motd file
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "{{ motd_message }}"
+        owner: root
+        group: root
+        mode: '0644'

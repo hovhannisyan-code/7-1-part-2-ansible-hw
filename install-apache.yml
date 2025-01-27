@@ -1,0 +1,12 @@
+---
+- name: Install Apache Web Server
+  hosts: all
+  become: yes
+  roles:
+    - apache_role
+  tasks:
+    - name: Check Apache is running
+      ansible.builtin.uri:
+        url: http://{{ ansible_default_ipv4.address }}
+        return_content: no
+        status_code: 200

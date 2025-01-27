@@ -1,0 +1,14 @@
+---
+- name: Change motd file
+  hosts: all
+  become: yes
+  vars:
+    custom_motd: "Welcome to the Ansible managed server! You are the best devops engineer!"
+  tasks:
+    - name: Update motd file
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "{{ custom_motd }}"
+        owner: root
+        group: root
+        mode: '0644'

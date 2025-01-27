@@ -1,0 +1,22 @@
+---
+- name: Download and unpack archive
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create directory for Kafka
+      ansible.builtin.file:
+        path: /tmp/kafka
+        state: directory
+        mode: '0755'
+
+    - name: Download Kafka archive
+      ansible.builtin.get_url:
+        url: https://dlcdn.apache.org/kafka/3.9.0/kafka-3.9.0-src.tgz
+        dest: /tmp/kafka.tar.gz
+        mode: '0644'
+
+    - name: Unpack Kafka archive
+      ansible.builtin.unarchive:
+        src: /tmp/kafka.tar.gz
+        dest: /tmp/kafka
+        remote_src: yes
